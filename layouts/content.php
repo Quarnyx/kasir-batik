@@ -1,0 +1,18 @@
+<?php
+switch ($page = $_GET['page'] ?? 'dashboard') {
+    case 'dashboard':
+        include 'pages/dashboard.php';
+        break;
+    case 'produk':
+        include 'pages/produk/index.php';
+        break;
+    case 'produk-form':
+        include 'pages/produk/form.php';
+        break;
+    case 'produk-proses':
+        include 'pages/produk/proses.php';
+        break;
+    default:
+        include 'pages/dashboard.php';
+        break;
+}
