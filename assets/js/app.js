@@ -162,8 +162,8 @@ File: Main Js File
       var menuItems = document.querySelectorAll("#sidebar-menu a");
       menuItems &&
         menuItems.forEach(function (item) {
-          var pageUrl = window.location.href.split(/[?#]/)[0];
-          if (item.href == pageUrl) {
+          var pageUrl = window.location.search;
+          if (item.search == pageUrl) {
             item.classList.add("active");
             var parent = item.parentElement;
             if (parent && parent.id !== "side-menu") {

@@ -51,14 +51,10 @@
                 </li>
 
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow">
-                        <i class="bx bx-envelope icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-email">Variasi</span>
+                    <a href="?page=pemasok">
+                        <i class="bx bx-calendar icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-calendar">Pemasok</span>
                     </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="email-inbox.php" data-key="t-inbox">Ukuran</a></li>
-                        <li><a href="email-read.php" data-key="t-read-email">Warna</a></li>
-                    </ul>
                 </li>
 
                 <li>

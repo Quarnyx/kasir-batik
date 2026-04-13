@@ -22,9 +22,6 @@
                 <tbody>
                     <?php
                     require_once __DIR__ . '/../../layouts/config.php';
-
-
-
                     $sql = mysqli_query($link, "SELECT * FROM produk_sku WHERE id_produk = '$_POST[id_produk]'");
                     $no = 0;
 
