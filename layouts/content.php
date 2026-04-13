@@ -12,6 +12,9 @@ switch ($page = $_GET['page'] ?? 'dashboard') {
     case 'produk-proses':
         include 'pages/produk/proses.php';
         break;
+    case 'produk-variasi':
+        include 'pages/produk/variasi-produk.php';
+        break;
     default:
         include 'pages/dashboard.php';
         break;

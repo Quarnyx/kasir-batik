@@ -47,10 +47,10 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <td><?= $row['nama_kategori'] ?? '-' ?></td>
                                 <td><?= $row['satuan'] ?? '-' ?></td>
                                 <td>
-                                    <button class="btn" id="edit" data-id="<?= $row['id'] ?>"
+                                    <button class="btn btn-info" id="edit" data-id="<?= $row['id'] ?>"
                                         data-nama="<?= $row['nama'] ?>">Edit</button>
-                                    <button class="btn" id="variasi" data-id="<?= $row['id'] ?>"
-                                        data-nama="<?= $row['nama'] ?>">Variasi</button>
+                                    <a href="?page=produk-variasi&id=<?= $row['id'] ?>" class="btn btn-warning"
+                                        data-nama="<?= $row['nama'] ?>">Variasi</a>
                                     <button class="btn btn-danger" id="delete" data-id="<?= $row['id'] ?>"
                                         data-nama="<?= $row['nama'] ?>">Hapus</button>
                                 </td>
