@@ -18,6 +18,9 @@ switch ($page = $_GET['page'] ?? 'dashboard') {
     case 'pemasok':
         include 'pages/pemasok/index.php';
         break;
+    case 'pembelian':
+        include 'pages/pembelian/index.php';
+        break;
     default:
         include 'pages/dashboard.php';
         break;

@@ -6,7 +6,8 @@
     <title><?php echo $language["Dashboard"]; ?> | Batik Widji</title>
 
     <?php include 'layouts/head.php'; ?>
-
+    <!-- choices css -->
+    <link href="assets/libs/choices.js/public/assets/styles/choices.min.css" rel="stylesheet" type="text/css" />
     <?php include 'layouts/head-style.php'; ?>
 
 </head>
@@ -57,12 +58,14 @@
 
     <?php include 'layouts/vendor-scripts.php'; ?>
 
+    <!-- choices js -->
+    <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
     <!-- apexcharts -->
-    <script src="assets/libs/apexcharts/apexcharts.min.js"></script>
+    <!-- <script src="assets/libs/apexcharts/apexcharts.min.js"></script> -->
     <!-- Chart JS -->
-    <script src="assets/js/pages/chartjs.js"></script>
+    <!-- <script src="assets/js/pages/chartjs.js"></script> -->
 
-    <script src="assets/js/pages/dashboard.init.js"></script>
+    <!-- <script src="assets/js/pages/dashboard.init.js"></script> -->
 
     <script src="assets/js/app.js"></script>
 

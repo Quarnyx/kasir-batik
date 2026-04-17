@@ -1,5 +1,8 @@
 <!-- Bootstrap Css -->
 <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+<link href="assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+<link href="assets/libs/select2/css/select2-bootstrap-5-theme.css" rel="stylesheet" type="text/css" />
+
 <!-- Icons Css -->
 <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 <!-- App Css-->
