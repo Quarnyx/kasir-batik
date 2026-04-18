@@ -153,9 +153,6 @@
 <script>
     $(document).ready(function () {
         $('#tabel-data').DataTable();
-        $('.select2').select2({
-            theme: 'bootstrap-5'
-        });
         var choicesIdPemasok = new Choices('#id_pemasok', {
             searchEnabled: true,
             placeholderValue: 'Pilih Pemasok',

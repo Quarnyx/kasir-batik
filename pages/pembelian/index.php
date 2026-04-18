@@ -93,7 +93,6 @@ if (isset($_GET['nomor_po'])) {
 
 
 <script>
-    // Lookup map: SKU id => harga_beli (built from PHP before Choices.js strips data attributes)
     var hargaBeliMap = {
         <?php
         $result2 = $link->query("SELECT id, harga_beli FROM produk_sku");
@@ -109,7 +108,6 @@ if (isset($_GET['nomor_po'])) {
     }
     $(document).ready(function () {
         loadTable();
-        // Initialize Choices.js on the product select (#id_sku)
         var choicesIdSku = new Choices('#id_sku', {
             searchEnabled: true,
             placeholderValue: 'Pilih Produk',
@@ -118,7 +116,6 @@ if (isset($_GET['nomor_po'])) {
             noResultsText: 'Tidak ditemukan',
         });
 
-        // Use the lookup map to fill harga_beli when product changes
         document.getElementById('id_sku').addEventListener('change', function () {
             var selectedValue = this.value;
             var hargabeli = hargaBeliMap[selectedValue] || '';

@@ -80,6 +80,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="?page=pembelian" data-key="t-inbox">Pembelian</a></li>
+                        <li><a href="?page=penerimaan-barang" data-key="t-read-email">Penerimaan Barang</a></li>
                         <li><a href="?page=riwayat-pembelian" data-key="t-read-email">Riwayat Pembelian</a></li>
                     </ul>
                 </li>
