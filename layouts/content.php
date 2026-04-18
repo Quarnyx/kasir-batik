@@ -27,6 +27,12 @@ switch ($page = $_GET['page'] ?? 'dashboard') {
     case 'riwayat-pembelian':
         include 'pages/pembelian/riwayat-pembelian.php';
         break;
+    case 'penjualan':
+        include 'pages/penjualan/index.php';
+        break;
+    case 'riwayat-penjualan':
+        include 'pages/penjualan/riwayat-penjualan.php';
+        break;
     default:
         include 'pages/dashboard.php';
         break;

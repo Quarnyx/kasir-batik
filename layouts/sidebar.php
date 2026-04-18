@@ -67,10 +67,14 @@
                 <li class="menu-title" data-key="t-pages">Transaksi</li>
 
                 <li>
-                    <a href="layouts-vertical.php">
-                        <i class="bx bx-layout icon nav-icon"></i>
-                        <span class="menu-item" data-key="t-vertical">Penjualan</span>
+                    <a href="javascript: void(0);" class="has-arrow">
+                        <i class="bx bx-envelope icon nav-icon"></i>
+                        <span class="menu-item" data-key="t-email">Penjualan</span>
                     </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="?page=penjualan" data-key="t-inbox">Penjualan</a></li>
+                        <li><a href="?page=riwayat-penjualan" data-key="t-read-email">Riwayat Penjualan</a></li>
+                    </ul>
                 </li>
 
                 <li>
