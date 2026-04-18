@@ -92,21 +92,21 @@
                 <li class="menu-title" data-key="t-components">Laporan</li>
 
                 <li>
-                    <a href="layouts-vertical.php">
+                    <a href="?page=laporan-penjualan">
                         <i class="bx bx-layout icon nav-icon"></i>
                         <span class="menu-item" data-key="t-vertical">Penjualan</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="layouts-vertical.php">
+                    <a href="?page=laporan-pembelian">
                         <i class="bx bx-layout icon nav-icon"></i>
                         <span class="menu-item" data-key="t-vertical">Pembelian</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="layouts-vertical.php">
+                    <a href="?page=laporan-persediaan">
                         <i class="bx bx-layout icon nav-icon"></i>
                         <span class="menu-item" data-key="t-vertical">Persediaan</span>
                     </a>

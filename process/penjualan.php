@@ -31,8 +31,8 @@ switch ($_GET['aksi'] ?? '') {
         $harga_jual = $_POST['harga_jual'];
         $jumlah = $_POST['jumlah'];
         $subtotal = $harga_jual * $jumlah;
-        $sql = "INSERT INTO detail_penjualan (id_sku, jumlah, harga_jual, nomor_penjualan, subtotal) 
-        VALUES ('$id_sku', '$jumlah', '$harga_jual', '$nomor_penjualan', '$subtotal')";
+        $sql = "INSERT INTO detail_penjualan (id_sku, jumlah, harga_jual, nomor_penjualan, subtotal, harga_beli) 
+        VALUES ('$id_sku', '$jumlah', '$harga_jual', '$nomor_penjualan', '$subtotal', '$harga_beli')";
         $result = $link->query($sql);
         if ($result) {
             http_response_code(200);
