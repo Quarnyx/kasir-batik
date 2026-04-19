@@ -1,11 +1,9 @@
-<div class="row mb-4">
-    <div class="col-lg-6">
-        <h1>Data Riwayat Pembelian</h1>
-        <p>Kelola riwayat pembelian toko batik.</p>
-    </div>
-</div>
+<?php
+$maintitle = "Batik Widji";
+$title = 'Riwayat Pembelian';
+include 'layouts/breadcrumb.php';
+?>
 
-<!-- end row-->
 <div class="row">
     <div class="col-12">
         <div class="card">

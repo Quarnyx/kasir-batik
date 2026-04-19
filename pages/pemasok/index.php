@@ -1,3 +1,8 @@
+<?php
+$maintitle = "Batik Widji";
+$title = 'Data Pemasok';
+?>
+<?php include 'layouts/breadcrumb.php'; ?>
 <div class="row mb-2">
     <div class="col-sm-4">
         <button id="tambah" class="btn btn-success rounded-pill waves-effect waves-light mb-3"><i

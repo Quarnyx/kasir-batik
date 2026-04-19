@@ -1,4 +1,7 @@
 <?php
+$maintitle = "Batik Widji";
+$title = 'Transaksi Penjualan';
+include 'layouts/breadcrumb.php';
 require_once __DIR__ . '/../../layouts/config.php';
 
 $query = mysqli_query($link, "SELECT MAX(nomor_penjualan) AS nomor_penjualan FROM penjualan");

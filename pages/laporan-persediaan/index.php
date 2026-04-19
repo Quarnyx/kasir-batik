@@ -1,3 +1,8 @@
+<?php
+$maintitle = "Batik Widji";
+$title = 'Laporan Stok Produk';
+?>
+<?php include 'layouts/breadcrumb.php'; ?>
 <div class="row">
     <div class="col-12">
         <div class="card">

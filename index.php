@@ -54,16 +54,10 @@
     </div>
     <!-- END layout-wrapper -->
 
-    <?php include 'layouts/right-sidebar.php'; ?>
-
     <?php include 'layouts/vendor-scripts.php'; ?>
 
     <!-- choices js -->
     <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
-    <!-- Chart JS -->
-    <!-- <script src="assets/js/pages/chartjs.js"></script> -->
-
-    <!-- <script src="assets/js/pages/dashboard.init.js"></script> -->
 
     <script src="assets/js/app.js"></script>
 

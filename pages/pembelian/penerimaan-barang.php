@@ -1,4 +1,7 @@
 <?php
+$maintitle = "Batik Widji";
+$title = 'Penerimaan Barang';
+include 'layouts/breadcrumb.php';
 require_once __DIR__ . '/../../layouts/config.php';
 
 // Ambil daftar PO yang berstatus 'dipesan' untuk dropdown

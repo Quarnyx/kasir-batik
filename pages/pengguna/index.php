@@ -1,9 +1,8 @@
-<div class="row mb-4">
-    <div class="col-lg-6">
-        <h1>Data Pengguna</h1>
-        <p>Kelola pengguna toko batik.</p>
-    </div>
-</div>
+<?php
+$maintitle = "Batik Widji";
+$title = 'Data Pengguna';
+?>
+<?php include 'layouts/breadcrumb.php'; ?>
 <?php
 if ($_SESSION['level'] == "admin") {
     ?>
