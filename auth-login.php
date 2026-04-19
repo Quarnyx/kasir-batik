@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             $_SESSION["level"] = $level;
 
                             // Redirect user to welcome page
-                            header("location: index.php");
+                            header("location: index.php?page=dashboard");
                         } else {
                             // Display an error message if password is not valid
                             $password_err = "Password Salah.";

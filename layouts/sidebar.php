@@ -35,7 +35,7 @@
                 <li class="menu-title" data-key="t-menu"><?php echo $language["Menu"]; ?></li>
 
                 <li>
-                    <a href="index.php">
+                    <a href="?page=dashboard">
                         <i class="bx bx-tachometer icon nav-icon"></i>
                         <span class="menu-item" data-key="t-dashboards"><?php echo $language["Dashboard"]; ?></span>
                     </a>

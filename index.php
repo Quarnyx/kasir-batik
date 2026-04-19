@@ -60,8 +60,6 @@
 
     <!-- choices js -->
     <script src="assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
-    <!-- apexcharts -->
-    <!-- <script src="assets/libs/apexcharts/apexcharts.min.js"></script> -->
     <!-- Chart JS -->
     <!-- <script src="assets/js/pages/chartjs.js"></script> -->
 
