@@ -102,18 +102,37 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Uang Bayar (Rp)</label>
                                 <input type="number" name="uang_bayar" class="form-control" placeholder="Uang Bayar"
                                     value="0" id="uang_bayar">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Kembalian</label>
                                 <input type="number" name="uang_kembalian" class="form-control" placeholder="Kembalian"
                                     value="0" id="uang_kembalian">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="simpleinput" class="form-label">Metode Pembayaran</label>
+                                <select name="id_metode_bayar" class="form-select" id="metode_pembayaran">
+                                    <option value="">Pilih Metode Pembayaran</option>
+                                    <?php
+                                    require_once __DIR__ . '/../../layouts/config.php';
+                                    $query = mysqli_query($link, "SELECT * FROM metode_pembayaran");
+                                    while ($data = mysqli_fetch_array($query)) {
+                                        ?>
+                                        <option value="<?= $data['id'] ?>">
+                                            <?= $data['nama'] . ' - ' . $data['nomor_rekening'] ?>
+                                        </option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
                     </div>

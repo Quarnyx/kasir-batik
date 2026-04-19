@@ -12,10 +12,38 @@ switch ($_GET['aksi'] ?? '') {
 
         $id_kategori_sql = $id_kategori !== null ? $id_kategori : 'NULL';
 
+        // Handle photo upload
+        $foto_sql = '';
+        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
+            $foto = $_FILES['foto']['name'];
+            $ekstensi_diperbolehkan = array('png', 'jpg', 'jpeg', 'gif');
+            $x = explode('.', $foto);
+            $ekstensi = strtolower(end($x));
+            $file_tmp = $_FILES['foto']['tmp_name'];
+            $foto = $kode . "." . $ekstensi;
+            $file_loc = __DIR__ . '/../assets/produk/' . $foto;
+
+            // Delete old photo if editing
+            if ($id > 0) {
+                $old = mysqli_query($link, "SELECT foto FROM produk WHERE id = $id");
+                $old_row = mysqli_fetch_assoc($old);
+                if ($old_row && $old_row['foto'] != '') {
+                    $old_file = __DIR__ . '/../assets/produk/' . $old_row['foto'];
+                    if (file_exists($old_file)) {
+                        unlink($old_file);
+                    }
+                }
+            }
+
+            move_uploaded_file($file_tmp, $file_loc);
+            $foto_sql = ", foto = '$foto'";
+        }
+
         if ($id > 0) {
-            $sql = "UPDATE produk SET kode = '$kode', nama = '$nama', id_kategori = $id_kategori_sql, deskripsi = '$deskripsi', satuan = '$satuan' WHERE id = $id";
+            $sql = "UPDATE produk SET kode = '$kode', nama = '$nama', id_kategori = $id_kategori_sql, deskripsi = '$deskripsi', satuan = '$satuan' $foto_sql WHERE id = $id";
         } else {
-            $sql = "INSERT INTO produk (kode, nama, id_kategori, deskripsi, satuan) VALUES ('$kode', '$nama', $id_kategori_sql, '$deskripsi', '$satuan')";
+            $foto_value = isset($foto) ? $foto : '';
+            $sql = "INSERT INTO produk (kode, nama, id_kategori, deskripsi, satuan, foto) VALUES ('$kode', '$nama', $id_kategori_sql, '$deskripsi', '$satuan', '$foto_value')";
         }
 
         if (mysqli_query($link, $sql)) {

@@ -45,6 +45,9 @@ switch ($page = $_GET['page'] ?? 'dashboard') {
     case 'pengguna':
         include 'pages/pengguna/index.php';
         break;
+    case 'metode-pembayaran':
+        include 'pages/metode-pembayaran/index.php';
+        break;
     default:
         include 'pages/dashboard.php';
         break;

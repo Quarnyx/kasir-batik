@@ -2,11 +2,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-6">
-                <script>document.write(new Date().getFullYear())</script> &copy; Symox.
+                <script>document.write(new Date().getFullYear())</script> &copy; Batik Widji Kendal.
             </div>
             <div class="col-sm-6">
                 <div class="text-sm-end d-none d-sm-block">
-                    Crafted with <i class="mdi mdi-heart text-danger"></i> by <a href="https://Themesdesign.in/" target="_blank" class="text-reset">Themesdesign</a>
+                    Crafted with <i class="mdi mdi-heart text-danger"></i> by <a href="#" target="_blank"
+                        class="text-reset">Widji Astutik</a>
                 </div>
             </div>
         </div>

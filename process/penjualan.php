@@ -12,8 +12,9 @@ switch ($_GET['aksi'] ?? '') {
         $uang_bayar = $_POST['uang_bayar'];
         $uang_kembalian = $_POST['uang_kembalian'];
         $id_kasir = $_POST['id_kasir'];
-        $sql = "INSERT INTO penjualan (nomor_penjualan, tanggal_jual, subtotal, jumlah_diskon, total, uang_bayar, uang_kembalian, id_kasir) 
-        VALUES ('$nomor_penjualan', '$tanggal_penjualan', '$subtotal', '$diskon', '$total', '$uang_bayar', '$uang_kembalian', '$id_kasir')";
+        $id_metode_bayar = $_POST['id_metode_bayar'];
+        $sql = "INSERT INTO penjualan (nomor_penjualan, tanggal_jual, subtotal, jumlah_diskon, total, uang_bayar, uang_kembalian, id_kasir, id_metode_bayar) 
+        VALUES ('$nomor_penjualan', '$tanggal_penjualan', '$subtotal', '$diskon', '$total', '$uang_bayar', '$uang_kembalian', '$id_kasir', '$id_metode_bayar')";
         $result = $link->query($sql);
         if ($result) {
             http_response_code(200);

@@ -7,6 +7,7 @@
             <th>Subtotal</th>
             <th>Diskon</th>
             <th>Total</th>
+            <th>Metode Pembayaran</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -14,7 +15,7 @@
         <?php
         require_once __DIR__ . '/../../layouts/config.php';
         $no = 0;
-        $query = mysqli_query($link, "SELECT * FROM penjualan");
+        $query = mysqli_query($link, "SELECT * FROM penjualan LEFT JOIN metode_pembayaran ON penjualan.id_metode_bayar = metode_pembayaran.id");
         while ($data = mysqli_fetch_array($query)) {
             $no++;
             ?>
@@ -25,6 +26,7 @@
                 <td><?= number_format($data['subtotal'], 0, ',', '.') ?></td>
                 <td><?= number_format($data['jumlah_diskon'], 0, ',', '.') ?></td>
                 <td><?= number_format($data['total'], 0, ',', '.') ?></td>
+                <td><?= $data['nama'] ?></td>
                 <td>
                     <a href="pages/penjualan/cetak-struk.php?nomor_penjualan=<?= $data['nomor_penjualan'] ?>"
                         target="_blank" class="btn btn-primary">Cetak</a>

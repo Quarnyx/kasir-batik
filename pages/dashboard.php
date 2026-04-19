@@ -125,7 +125,7 @@ require_once __DIR__ . '/../layouts/config.php';
 </div>
 
 <div class="row">
-    <div class="col-xl-8">
+    <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex flex-wrap align-items-center mb-3">
@@ -146,7 +146,7 @@ require_once __DIR__ . '/../layouts/config.php';
         </div>
     </div>
 
-    <div class="col-xl-4">
+    <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
                 <div class="d-flex flex-wrap align-items-center">
@@ -156,11 +156,11 @@ require_once __DIR__ . '/../layouts/config.php';
                     <table id="tabel-data" class="table table-bordered dt-responsive nowrap">
                         <thead>
                             <tr>
-                                <th class="text-center" style="vertical-align: middle;">No</th>
-                                <th class="text-center" style="vertical-align: middle;">Kode</th>
+                                <th class="text-center" style="vertical-align: middle; width: 50px;">No</th>
+                                <th class="text-center" style="vertical-align: middle; width: 100px;">Kode</th>
                                 <th class="text-center" style="vertical-align: middle;">Nama Produk</th>
-                                <th class="text-center" style="vertical-align: middle;">Satuan</th>
-                                <th class="text-center" style="vertical-align: middle;">Stok Akhir</th>
+                                <th class="text-center" style="vertical-align: middle; width: 100px;">Satuan</th>
+                                <th class="text-center" style="vertical-align: middle; width: 100px;">Stok Akhir</th>
 
                             </tr>
                         </thead>
@@ -216,6 +216,13 @@ foreach ($sales_data as $data) {
 }
 ?>
 <script>
+    $(document).ready(function () {
+        $('#tabel-data').DataTable({
+            "ordering": false,
+            "info": false
+        });
+    });
+
     function getChartColorsArray(sales_statistics) {
         if (document.getElementById(sales_statistics) !== null) {
             var colors = document.getElementById(sales_statistics).getAttribute("data-colors");
