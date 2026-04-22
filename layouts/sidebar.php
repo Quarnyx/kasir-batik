@@ -45,6 +45,13 @@
                     <li class="menu-title" data-key="t-applications">Master Data</li>
 
                     <li>
+                        <a href="?page=kategori">
+                            <i class="bx bx-hash icon nav-icon"></i>
+                            <span class="menu-item" data-key="t-kategori">Kategori Produk</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="?page=produk">
                             <i class="bx bx-box icon nav-icon"></i>
                             <span class="menu-item" data-key="t-calendar">Produk</span>

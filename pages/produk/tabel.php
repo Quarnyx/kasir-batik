@@ -31,6 +31,7 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <th>Nama Produk</th>
                         <th>Kategori</th>
                         <th>Satuan</th>
+                        <th>Foto</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -46,6 +47,8 @@ $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
                                 <td><?= $row['nama'] ?></td>
                                 <td><?= $row['nama_kategori'] ?? '-' ?></td>
                                 <td><?= $row['satuan'] ?? '-' ?></td>
+                                <td><img src="assets/images/produk/<?= $row['foto'] ?>" alt="Foto Produk" width="100"
+                                        height="100"></td>
                                 <td>
                                     <button class="btn btn-info" id="edit" data-id="<?= $row['id'] ?>"
                                         data-nama="<?= $row['nama'] ?>">Edit</button>
