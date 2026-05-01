@@ -18,12 +18,13 @@ $data = mysqli_fetch_array($query);
     <div class="container-fluid">
 
         <div class="card-header py-3">
+            <?php include "../../layouts/letter-header.php"; ?>
+
             <div class="row">
                 <div class="col-12 text-center">
-                    <h3>Batik Widji</h3>
-                    <h3><b>Struk Belanja</b></h3>
-                    <h4><?= $data['nomor_penjualan'] ?></h4>
-                    <h4><?= tanggal($data['tanggal_jual']) ?></h4>
+                    <h5><b>No. Transaksi</b> : <?= $data['nomor_penjualan'] ?></h5>
+                    <h5><?= tanggal($data['tanggal_jual']) ?></h5>
+                    <h5>Kasir: <?= $_SESSION['nama'] ?></h5>
                 </div>
             </div>
         </div>
@@ -104,7 +105,6 @@ $data = mysqli_fetch_array($query);
 
 </body>
 <script>
-
     window.print();
     window.onafterprint = window.close;
 </script>

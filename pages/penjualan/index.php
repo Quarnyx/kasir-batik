@@ -71,18 +71,20 @@ if (isset($_GET['nomor_penjualan'])) {
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">Stok</label>
-                                <input type="number" name="stok" class="form-control" placeholder="Stok" readonly>
+                                <input type="number" name="stok" class="form-control" placeholder="Stok" readonly
+                                    id="stok">
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">Jumlah Jual</label>
-                                <input type="number" name="jumlah" class="form-control" placeholder="Jumlah Jual">
+                                <input type="number" name="jumlah" class="form-control" placeholder="Jumlah Jual"
+                                    id="jumlah_jual">
                             </div>
                         </div>
                         <div class="col-sm-4">
                             <button type="submit" class="btn btn-success rounded-pill waves-effect waves-light mt-3"><i
-                                    class="mdi mdi-plus"></i> Tambah Barang</button>
+                                    class="mdi mdi-plus" id="submit-btn"></i> Tambah Barang</button>
                         </div>
                     </div>
                 </form>
@@ -149,6 +151,18 @@ if (isset($_GET['nomor_penjualan'])) {
             console.log(stok);
         });
 
+        $("#jumlah_jual").keyup(function () {
+            var stok = parseInt($("#stok").val());
+            var jumlah_jual = parseInt($(this).val());
+            if (jumlah_jual > stok) {
+                alertify.error("Jumlah Jual Melebihi Stok");
+                $(this).val(stok);
+                $("#submit-btn").attr("disabled", true);
+            } else {
+                $("#submit-btn").attr("disabled", false);
+            }
+        });
+
         $("#tambah-penjualan-detail").submit(function (e) {
             e.preventDefault();
             var formData = new FormData(this);
@@ -164,6 +178,7 @@ if (isset($_GET['nomor_penjualan'])) {
                     if (data.status === 'success') {
                         loadTable();
                         alertify.success(data.message);
+                        window.location.reload();
                     } else {
                         alertify.error(data.message);
                     }

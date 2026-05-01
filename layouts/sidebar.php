@@ -59,6 +59,13 @@
                     </li>
 
                     <li>
+                        <a href="?page=promo">
+                            <i class="bx bx-box icon nav-icon"></i>
+                            <span class="menu-item" data-key="t-calendar">Promo</span>
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="?page=pemasok">
                             <i class="bx bx-box icon nav-icon"></i>
                             <span class="menu-item" data-key="t-calendar">Pemasok</span>

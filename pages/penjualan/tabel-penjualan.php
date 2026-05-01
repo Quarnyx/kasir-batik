@@ -88,9 +88,29 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="simpleinput" class="form-label">Diskon (Rp)</label>
-                                <input type="number" name="diskon" class="form-control" placeholder="Diskon" value="0"
-                                    id="diskon">
+                                <label for="simpleinput" class="form-label">Promo</label>
+                                <select name="promo" class="form-select" id="promo">
+                                    <option value="0">Tidak Menggunakan Promo</option>
+                                    <?php
+                                    $tanggal_sekarang = date('Y-m-d');
+                                    $query = mysqli_query($link, "SELECT * FROM promo WHERE tanggal_mulai <= '$tanggal_sekarang' AND tanggal_selesai >= '$tanggal_sekarang'");
+
+                                    while ($data = mysqli_fetch_array($query)) {
+                                        ?>
+                                        <option value="<?= $data['persen_diskon'] ?>">
+                                            <?= $data['promo'] . ' - ' . $data['persen_diskon'] . '%' ?>
+                                        </option>
+                                        <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="simpleinput" class="form-label">Jumlah Diskon (Rp)</label>
+                                <input type="number" name="jumlah_diskon" class="form-control"
+                                    placeholder="Jumlah Diskon" value="0" id="jumlah_diskon" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -147,18 +167,20 @@
 <script>
     $(document).ready(function () {
         $('#tabel-data').DataTable();
-        $('#diskon').on('input', function () {
+        $('#promo').on('change', function () {
             var diskon = parseFloat($(this).val()) || 0;
+            var jumlah_diskon = (diskon / 100) * parseFloat($('#subtotal').val()) || 0;
             var subtotal = parseFloat($('#subtotal').val()) || 0;
-            var total = subtotal - diskon;
+            var total = subtotal - jumlah_diskon;
             var uang_bayar = parseFloat($('#uang_bayar').val()) || 0;
             var uang_kembalian = uang_bayar - total;
             $('#total').val(total);
+            $('#jumlah_diskon').val(jumlah_diskon);
             $('#uang_kembalian').val(uang_kembalian);
         });
         $('#uang_bayar').on('input', function () {
             var uang_bayar = parseFloat($(this).val()) || 0;
-            var diskon = parseFloat($('#diskon').val()) || 0;
+            var diskon = parseFloat($('#jumlah_diskon').val()) || 0;
             var subtotal = parseFloat($('#subtotal').val()) || 0;
             var total = subtotal - diskon;
             var uang_kembalian = uang_bayar - total;
@@ -178,6 +200,7 @@
                         if (data.status === 'success') {
                             loadTable();
                             alertify.success(data.message);
+                            window.location.reload();
                         } else {
                             alertify.error(data.message);
                         }

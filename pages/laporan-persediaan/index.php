@@ -6,7 +6,9 @@ $title = 'Laporan Stok Produk';
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <h4 class="text-center mt-3 mb-3"><b>TOKO BATIK WIDJI</b><br><b>LAPORAN STOK PRODUK</b></h4>
+            <?php include_once "layouts/letter-header.php"; ?>
+
+            <h4 class="text-center mt-3 mb-3"><b>LAPORAN STOK PRODUK</b></h4>
             <div class="card-body">
 
 
@@ -23,6 +25,25 @@ $title = 'Laporan Stok Produk';
                     </thead>
                     <tbody>
                         <?php
+                        function tanggal($tanggal)
+                        {
+                            $bulan = array(
+                                1 => 'Januari',
+                                'Februari',
+                                'Maret',
+                                'April',
+                                'Mei',
+                                'Juni',
+                                'Juli',
+                                'Agustus',
+                                'September',
+                                'Oktober',
+                                'November',
+                                'Desember'
+                            );
+                            $split = explode('-', $tanggal);
+                            return $split[2] . ' ' . $bulan[(int) $split[1]] . ' ' . $split[0];
+                        }
                         $no = 0;
                         require_once __DIR__ . '/../../layouts/config.php';
                         $query = mysqli_query($link, "SELECT * FROM v_stok_persediaan");
@@ -40,6 +61,8 @@ $title = 'Laporan Stok Produk';
                         ?>
                     </tbody>
                 </table>
+                <?php include_once "layouts/letter-footer.php"; ?>
+
                 <div class="mt-4 mb-1">
                     <div class="text-end d-print-none">
                         <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i

@@ -64,7 +64,8 @@ $title = 'Laporan Penjualan';
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <h4 class="text-center mt-3 mb-3"><b>TOKO BATIK WIDJI</b><br><b>LAPORAN PENJUALAN</b><br>Periode <?php
+                <?php include_once "layouts/letter-header.php"; ?>
+                <h4 class="text-center mt-3 mb-3"><b>LAPORAN PENJUALAN</b><br>Periode <?php
                 if (!empty($_GET["dari_tanggal"]) && !empty($_GET["sampai_tanggal"])) {
                     echo tanggal($_GET['dari_tanggal']) . " s.d " . tanggal($_GET['sampai_tanggal']);
                 } else {
@@ -116,6 +117,7 @@ $title = 'Laporan Penjualan';
                             </tr>
                         </tbody>
                     </table>
+                    <?php include_once "layouts/letter-footer.php"; ?>
                     <div class="mt-4 mb-1">
                         <div class="text-end d-print-none">
                             <a href="javascript:window.print()" class="btn btn-primary waves-effect waves-light"><i

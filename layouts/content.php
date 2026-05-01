@@ -51,6 +51,9 @@ switch ($page = $_GET['page'] ?? 'dashboard') {
     case 'kategori':
         include 'pages/kategori/index.php';
         break;
+    case 'promo':
+        include 'pages/promo/index.php';
+        break;
     default:
         include 'pages/dashboard.php';
         break;
