@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 19/04/2026 17:03:48
+ Date: 01/05/2026 10:24:33
 */
 
 SET NAMES utf8mb4;
@@ -32,11 +32,12 @@ CREATE TABLE `detail_pembelian`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_dp_sku`(`id_sku` ASC) USING BTREE,
   CONSTRAINT `detail_pembelian_ibfk_2` FOREIGN KEY (`id_sku`) REFERENCES `produk_sku` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Detail item dalam pesanan pembelian' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Detail item dalam pesanan pembelian' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of detail_pembelian
 -- ----------------------------
+INSERT INTO `detail_pembelian` VALUES (16, 'PBL001', 21, 100, 100, 50000.00, 5000000.00);
 
 -- ----------------------------
 -- Table structure for detail_penjualan
@@ -53,11 +54,13 @@ CREATE TABLE `detail_penjualan`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_dj_sku`(`id_sku` ASC) USING BTREE,
   CONSTRAINT `detail_penjualan_ibfk_2` FOREIGN KEY (`id_sku`) REFERENCES `produk_sku` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Detail produk yang dijual dalam satu transaksi' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Detail produk yang dijual dalam satu transaksi' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of detail_penjualan
 -- ----------------------------
+INSERT INTO `detail_penjualan` VALUES (14, 'PNJ001', 21, 2, 125000.00, 50000.00, 250000.00);
+INSERT INTO `detail_penjualan` VALUES (15, 'PNJ002', 21, 2, 125000.00, 50000.00, 250000.00);
 
 -- ----------------------------
 -- Table structure for kategori
@@ -67,7 +70,7 @@ CREATE TABLE `kategori`  (
   `id` int NOT NULL AUTO_INCREMENT COMMENT 'ID kategori',
   `nama_kategori` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT 'Nama kategori (Batik Tulis, Kemeja Batik, dll)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Kategori produk batik' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Kategori produk batik' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of kategori
@@ -106,7 +109,7 @@ CREATE TABLE `pemasok`  (
   `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'Alamat email',
   `alamat` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT 'Alamat lengkap',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Data pemasok / supplier batik' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Data pemasok / supplier batik' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pemasok
@@ -125,13 +128,13 @@ CREATE TABLE `pengguna`  (
   `level` enum('admin','kasir') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'kasir' COMMENT 'Hak akses: admin=semua, kasir=jual, gudang=stok, pemilik=laporan',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uq_nama_pengguna`(`username` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Data pengguna aplikasi & hak akses' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Data pengguna aplikasi & hak akses' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pengguna
 -- ----------------------------
 INSERT INTO `pengguna` VALUES (1, 'Admin', 'admin', '0192023a7bbd73250516f069df18b500', 'admin');
-INSERT INTO `pengguna` VALUES (4, 'Anugrah Sandy Sulman Pratama', 'sandyd', '123', 'kasir');
+INSERT INTO `pengguna` VALUES (4, 'Kasir', 'kasir', '0192023a7bbd73250516f069df18b500', 'kasir');
 
 -- ----------------------------
 -- Table structure for penjualan
@@ -154,11 +157,13 @@ CREATE TABLE `penjualan`  (
   INDEX `fk_jual_bayar`(`id_metode_bayar` ASC) USING BTREE,
   CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`id_kasir`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `penjualan_ibfk_3` FOREIGN KEY (`id_metode_bayar`) REFERENCES `metode_pembayaran` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Header transaksi penjualan di kasir POS' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Header transaksi penjualan di kasir POS' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of penjualan
 -- ----------------------------
+INSERT INTO `penjualan` VALUES (6, 'PNJ001', '2026-04-20', 1, 250000.00, 50000.00, 200000.00, 200000.00, 0.00, 3);
+INSERT INTO `penjualan` VALUES (7, 'PNJ002', '2026-05-01', 1, 250000.00, 25000.00, 225000.00, 250000.00, 25000.00, 3);
 
 -- ----------------------------
 -- Table structure for pesanan_pembelian
@@ -185,11 +190,12 @@ CREATE TABLE `pesanan_pembelian`  (
   INDEX `fk_pp_pengguna`(`id_pengguna` ASC) USING BTREE,
   CONSTRAINT `pesanan_pembelian_ibfk_1` FOREIGN KEY (`id_pemasok`) REFERENCES `pemasok` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `pesanan_pembelian_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Header transaksi pembelian / stok masuk dari pemasok' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Header transaksi pembelian / stok masuk dari pemasok' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pesanan_pembelian
 -- ----------------------------
+INSERT INTO `pesanan_pembelian` VALUES (8, 'PBL001', 2, 1, '2026-04-20', '2026-04-20', '2026-04-20', 'diterima', 5000000.00, 0.00, 0.00, 0.00, 0.00, 5000000.00);
 
 -- ----------------------------
 -- Table structure for produk
@@ -207,7 +213,7 @@ CREATE TABLE `produk`  (
   UNIQUE INDEX `uq_kode_produk`(`kode` ASC) USING BTREE,
   INDEX `fk_produk_kategori`(`id_kategori` ASC) USING BTREE,
   CONSTRAINT `produk_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Produk master batik' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Produk master batik' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of produk
@@ -245,14 +251,14 @@ CREATE TABLE `produk_sku`  (
   UNIQUE INDEX `uq_kode_sku`(`kode_sku` ASC) USING BTREE,
   INDEX `fk_sku_produk`(`id_produk` ASC) USING BTREE,
   CONSTRAINT `produk_sku_ibfk_1` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'SKU: kombinasi variasi produk dengan stok & harga masing-masing' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 49 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'SKU: kombinasi variasi produk dengan stok & harga masing-masing' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of produk_sku
 -- ----------------------------
-INSERT INTO `produk_sku` VALUES (20, 23, 'PRD-001-M', 0.00, 120000.00, NULL, 'M');
-INSERT INTO `produk_sku` VALUES (21, 23, 'PRD-001-L', 0.00, 125000.00, NULL, 'L');
-INSERT INTO `produk_sku` VALUES (22, 23, 'PRD-001-XL', 0.00, 130000.00, NULL, 'XL');
+INSERT INTO `produk_sku` VALUES (20, 23, 'PRD-001-M', 50000.00, 120000.00, NULL, 'M');
+INSERT INTO `produk_sku` VALUES (21, 23, 'PRD-001-L', 50000.00, 125000.00, NULL, 'L');
+INSERT INTO `produk_sku` VALUES (22, 23, 'PRD-001-XL', 50000.00, 130000.00, NULL, 'XL');
 INSERT INTO `produk_sku` VALUES (23, 24, 'PRD-002-M', 0.00, 122000.00, NULL, 'M');
 INSERT INTO `produk_sku` VALUES (24, 24, 'PRD-002-L', 0.00, 127000.00, NULL, 'L');
 INSERT INTO `produk_sku` VALUES (25, 24, 'PRD-002-XL', 0.00, 133000.00, NULL, 'XL');
@@ -280,6 +286,37 @@ INSERT INTO `produk_sku` VALUES (46, 37, 'PRD-015-200x150', 0.00, 150000.00, NUL
 INSERT INTO `produk_sku` VALUES (47, 38, 'PRD-016-200x150', 0.00, 150000.00, NULL, '200x150 cm');
 
 -- ----------------------------
+-- Table structure for promo
+-- ----------------------------
+DROP TABLE IF EXISTS `promo`;
+CREATE TABLE `promo`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `promo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `persen_diskon` int NULL DEFAULT NULL,
+  `tanggal_mulai` date NULL DEFAULT NULL,
+  `tanggal_selesai` date NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of promo
+-- ----------------------------
+INSERT INTO `promo` VALUES (1, 'Hari Batik Nasional', 10, '2026-04-30', '2026-05-09');
+INSERT INTO `promo` VALUES (3, 'Lebaran', 20, '2026-03-19', '2026-03-28');
+
+-- ----------------------------
+-- View structure for v_helper_stok_keluar
+-- ----------------------------
+DROP VIEW IF EXISTS `v_helper_stok_keluar`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_helper_stok_keluar` AS select `detail_penjualan`.`id_sku` AS `id_sku`,sum(`detail_penjualan`.`jumlah`) AS `total_keluar` from `detail_penjualan` group by `detail_penjualan`.`id_sku`;
+
+-- ----------------------------
+-- View structure for v_helper_stok_masuk
+-- ----------------------------
+DROP VIEW IF EXISTS `v_helper_stok_masuk`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_helper_stok_masuk` AS select `detail_pembelian`.`id_sku` AS `id_sku`,sum(`detail_pembelian`.`jumlah_terima`) AS `total_masuk` from `detail_pembelian` where (`detail_pembelian`.`jumlah_terima` > 0) group by `detail_pembelian`.`id_sku`;
+
+-- ----------------------------
 -- View structure for v_pembelian
 -- ----------------------------
 DROP VIEW IF EXISTS `v_pembelian`;
@@ -295,6 +332,6 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_penjualan` AS select `
 -- View structure for v_stok_persediaan
 -- ----------------------------
 DROP VIEW IF EXISTS `v_stok_persediaan`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stok_persediaan` AS select `ps`.`id` AS `id_sku`,`ps`.`kode_sku` AS `kode_sku`,`ps`.`nama_variasi` AS `nama_variasi`,`p`.`id` AS `id_produk`,`p`.`kode` AS `kode_produk`,`p`.`nama` AS `nama_produk`,`k`.`nama_kategori` AS `nama_kategori`,`p`.`satuan` AS `satuan`,`ps`.`harga_beli` AS `harga_beli`,`ps`.`harga_jual` AS `harga_jual`,coalesce(`masuk`.`total_masuk`,0) AS `total_masuk`,coalesce(`keluar`.`total_keluar`,0) AS `total_keluar`,(coalesce(`masuk`.`total_masuk`,0) - coalesce(`keluar`.`total_keluar`,0)) AS `stok_akhir`,((coalesce(`masuk`.`total_masuk`,0) - coalesce(`keluar`.`total_keluar`,0)) * `ps`.`harga_beli`) AS `nilai_persediaan` from ((((`produk_sku` `ps` join `produk` `p` on((`ps`.`id_produk` = `p`.`id`))) left join `kategori` `k` on((`p`.`id_kategori` = `k`.`id`))) left join (select `detail_pembelian`.`id_sku` AS `id_sku`,sum(`detail_pembelian`.`jumlah_terima`) AS `total_masuk` from `detail_pembelian` where (`detail_pembelian`.`jumlah_terima` > 0) group by `detail_pembelian`.`id_sku`) `masuk` on((`ps`.`id` = `masuk`.`id_sku`))) left join (select `detail_penjualan`.`id_sku` AS `id_sku`,sum(`detail_penjualan`.`jumlah`) AS `total_keluar` from `detail_penjualan` group by `detail_penjualan`.`id_sku`) `keluar` on((`ps`.`id` = `keluar`.`id_sku`))) order by `p`.`nama`,`ps`.`nama_variasi`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_stok_persediaan` AS select `ps`.`id` AS `id_sku`,`ps`.`kode_sku` AS `kode_sku`,`ps`.`nama_variasi` AS `nama_variasi`,`p`.`id` AS `id_produk`,`p`.`kode` AS `kode_produk`,`p`.`nama` AS `nama_produk`,`k`.`nama_kategori` AS `nama_kategori`,`p`.`satuan` AS `satuan`,`ps`.`harga_beli` AS `harga_beli`,`ps`.`harga_jual` AS `harga_jual`,coalesce(`m`.`total_masuk`,0) AS `total_masuk`,coalesce(`kl`.`total_keluar`,0) AS `total_keluar`,(coalesce(`m`.`total_masuk`,0) - coalesce(`kl`.`total_keluar`,0)) AS `stok_akhir`,((coalesce(`m`.`total_masuk`,0) - coalesce(`kl`.`total_keluar`,0)) * `ps`.`harga_beli`) AS `nilai_persediaan` from ((((`produk_sku` `ps` join `produk` `p` on((`ps`.`id_produk` = `p`.`id`))) left join `kategori` `k` on((`p`.`id_kategori` = `k`.`id`))) left join `v_helper_stok_masuk` `m` on((`ps`.`id` = `m`.`id_sku`))) left join `v_helper_stok_keluar` `kl` on((`ps`.`id` = `kl`.`id_sku`))) order by `p`.`nama`,`ps`.`nama_variasi`;
 
 SET FOREIGN_KEY_CHECKS = 1;
