@@ -56,14 +56,14 @@ if (isset($_GET['nomor_penjualan'])) {
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">Harga Beli</label>
-                                <input type="number" name="harga_beli" class="form-control" placeholder="Harga Beli"
-                                    readonly>
+                                <input type="text" name="harga_beli" class="form-control currency"
+                                    placeholder="Harga Beli" readonly>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">Harga Jual</label>
-                                <input type="number" name="harga_jual" class="form-control" placeholder="Harga Jual">
+                                <input type="text" name="harga_jual" class="form-control" placeholder="Harga Jual">
                             </div>
                         </div>
                     </div>
@@ -145,10 +145,22 @@ if (isset($_GET['nomor_penjualan'])) {
             var hargajual = hargaJualMap[selectedValue] || '';
             var hargabeli = hargaBeliMap[selectedValue] || '';
             var stok = stokMap[selectedValue] || '';
-            $('input[name=harga_jual]').val(hargajual);
-            $('input[name=harga_beli]').val(hargabeli);
+            $('input[name=harga_jual]').val(hargajual.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
+            $('input[name=harga_beli]').val(hargabeli.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
             $('input[name=stok]').val(stok);
-            console.log(stok);
+        });
+
+        $('input[name=harga_jual]').on('input', function () {
+            var angka = $(this).val()
+                .replace(/\./g, '')
+                .replace(/[^0-9]/g, '');
+
+            if (angka === '') {
+                $(this).val('');
+                return;
+            }
+
+            $(this).val(angka.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
         });
 
         $("#jumlah_jual").keyup(function () {

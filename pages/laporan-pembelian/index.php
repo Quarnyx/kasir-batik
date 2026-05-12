@@ -97,7 +97,8 @@ $title = 'Laporan Pembelian';
                                     <td><?= $data['nomor_po'] ?></td>
                                     <td><?= $data['nama'] ?> - <?= $data['nama_variasi'] ?></td>
                                     <td><?= tanggal($data['tanggal_pesan']) ?></td>
-                                    <td><?= tanggal($data['tanggal_terima']) ?></td>
+                                    <td><?= $data['tanggal_terima'] != null ? tanggal($data['tanggal_terima']) : 'Belum diterima' ?>
+                                    </td>
                                     <td>Rp. <?= number_format($data['harga_beli'], 0, ',', '.') ?></td>
                                     <td><?= $data['jumlah_pesan'] ?></td>
                                     <td>Rp. <?= number_format($data['harga_beli'] * $data['jumlah_pesan'], 0, ',', '.') ?>

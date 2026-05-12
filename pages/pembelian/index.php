@@ -65,7 +65,7 @@ if (isset($_GET['nomor_po'])) {
                         <div class="col-lg-4">
                             <div class="mb-3">
                                 <label class="form-label">Harga Beli</label>
-                                <input type="number" name="harga_beli" class="form-control" placeholder="Harga Beli">
+                                <input type="text" name="harga_beli" class="form-control" placeholder="Harga Beli">
                             </div>
                         </div>
                         <div class="col-lg-4">
@@ -122,7 +122,7 @@ if (isset($_GET['nomor_po'])) {
         document.getElementById('id_sku').addEventListener('change', function () {
             var selectedValue = this.value;
             var hargabeli = hargaBeliMap[selectedValue] || '';
-            $('input[name=harga_beli]').val(hargabeli);
+            $('input[name=harga_beli]').val(hargabeli.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'));
         });
 
         $("#tambah-pembelian-detail").submit(function (e) {

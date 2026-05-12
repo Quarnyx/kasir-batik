@@ -11,7 +11,7 @@
  Target Server Version : 80030 (8.0.30)
  File Encoding         : 65001
 
- Date: 01/05/2026 10:24:33
+ Date: 08/05/2026 20:05:05
 */
 
 SET NAMES utf8mb4;
@@ -32,12 +32,14 @@ CREATE TABLE `detail_pembelian`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_dp_sku`(`id_sku` ASC) USING BTREE,
   CONSTRAINT `detail_pembelian_ibfk_2` FOREIGN KEY (`id_sku`) REFERENCES `produk_sku` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Detail item dalam pesanan pembelian' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Detail item dalam pesanan pembelian' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of detail_pembelian
 -- ----------------------------
 INSERT INTO `detail_pembelian` VALUES (16, 'PBL001', 21, 100, 100, 50000.00, 5000000.00);
+INSERT INTO `detail_pembelian` VALUES (17, 'PBL002', 21, 100, 0, 50000.00, 5000000.00);
+INSERT INTO `detail_pembelian` VALUES (18, 'PBL003', 21, 100, 0, 50000.00, 5000000.00);
 
 -- ----------------------------
 -- Table structure for detail_penjualan
@@ -54,13 +56,16 @@ CREATE TABLE `detail_penjualan`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_dj_sku`(`id_sku` ASC) USING BTREE,
   CONSTRAINT `detail_penjualan_ibfk_2` FOREIGN KEY (`id_sku`) REFERENCES `produk_sku` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Detail produk yang dijual dalam satu transaksi' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Detail produk yang dijual dalam satu transaksi' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of detail_penjualan
 -- ----------------------------
 INSERT INTO `detail_penjualan` VALUES (14, 'PNJ001', 21, 2, 125000.00, 50000.00, 250000.00);
 INSERT INTO `detail_penjualan` VALUES (15, 'PNJ002', 21, 2, 125000.00, 50000.00, 250000.00);
+INSERT INTO `detail_penjualan` VALUES (19, 'PNJ003', 21, 1, 125000.00, 50000.00, 125000.00);
+INSERT INTO `detail_penjualan` VALUES (23, 'PNJ004', 21, 50, 125000.00, 50000.00, 6250000.00);
+INSERT INTO `detail_penjualan` VALUES (24, 'PNJ004', 21, 5, 125000.00, 50000.00, 625000.00);
 
 -- ----------------------------
 -- Table structure for kategori
@@ -96,7 +101,7 @@ CREATE TABLE `metode_pembayaran`  (
 -- Records of metode_pembayaran
 -- ----------------------------
 INSERT INTO `metode_pembayaran` VALUES (2, 'BRI', 'kartu', '21313131231', 'Batik Widji');
-INSERT INTO `metode_pembayaran` VALUES (3, 'Tunai', 'tunai', '0', 'Batik');
+INSERT INTO `metode_pembayaran` VALUES (3, 'Tunai', 'tunai', '', 'Batik');
 
 -- ----------------------------
 -- Table structure for pemasok
@@ -115,6 +120,29 @@ CREATE TABLE `pemasok`  (
 -- Records of pemasok
 -- ----------------------------
 INSERT INTO `pemasok` VALUES (2, 'PT ABC D', '22', 'aa@gmail.com', 'asdad');
+
+-- ----------------------------
+-- Table structure for pengembalian_penjualan
+-- ----------------------------
+DROP TABLE IF EXISTS `pengembalian_penjualan`;
+CREATE TABLE `pengembalian_penjualan`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nomor_penjualan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `id_sku` int NULL DEFAULT NULL,
+  `jumlah_pengembalian` int NULL DEFAULT NULL,
+  `alasan_pengembalian` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL,
+  `nominal_pengembalian` decimal(10, 2) NULL DEFAULT NULL,
+  `tanggal_pengembalian` date NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `id_sku`(`id_sku` ASC) USING BTREE,
+  CONSTRAINT `pengembalian_penjualan_ibfk_1` FOREIGN KEY (`id_sku`) REFERENCES `produk_sku` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of pengembalian_penjualan
+-- ----------------------------
+INSERT INTO `pengembalian_penjualan` VALUES (4, 'PNJ002', 21, 1, 'asdasdsda', 50000.00, '2026-05-08');
+INSERT INTO `pengembalian_penjualan` VALUES (5, 'PNJ001', 21, 2, 'dddddddddddddddd', 50000.00, '2026-05-08');
 
 -- ----------------------------
 -- Table structure for pengguna
@@ -148,22 +176,25 @@ CREATE TABLE `penjualan`  (
   `subtotal` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT 'Jumlah sebelum diskon & pajak',
   `jumlah_diskon` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT 'Nominal potongan harga',
   `total` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT 'Total yang harus dibayar pelanggan',
-  `uang_bayar` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT 'Uang yang diberikan pelanggan',
+  `uang_bayar` decimal(15, 2) NULL DEFAULT 0.00 COMMENT 'Uang yang diberikan pelanggan',
   `uang_kembalian` decimal(15, 2) NOT NULL DEFAULT 0.00 COMMENT 'Kembalian untuk pelanggan',
   `id_metode_bayar` int NULL DEFAULT NULL COMMENT 'Metode pembayaran yang digunakan',
+  `upload` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `idx_penjualan_tanggal`(`tanggal_jual` ASC) USING BTREE,
   INDEX `fk_jual_kasir`(`id_kasir` ASC) USING BTREE,
   INDEX `fk_jual_bayar`(`id_metode_bayar` ASC) USING BTREE,
   CONSTRAINT `penjualan_ibfk_2` FOREIGN KEY (`id_kasir`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `penjualan_ibfk_3` FOREIGN KEY (`id_metode_bayar`) REFERENCES `metode_pembayaran` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Header transaksi penjualan di kasir POS' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Header transaksi penjualan di kasir POS' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of penjualan
 -- ----------------------------
-INSERT INTO `penjualan` VALUES (6, 'PNJ001', '2026-04-20', 1, 250000.00, 50000.00, 200000.00, 200000.00, 0.00, 3);
-INSERT INTO `penjualan` VALUES (7, 'PNJ002', '2026-05-01', 1, 250000.00, 25000.00, 225000.00, 250000.00, 25000.00, 3);
+INSERT INTO `penjualan` VALUES (6, 'PNJ001', '2026-04-20', 1, 250000.00, 50000.00, 200000.00, 200000.00, 0.00, 3, NULL);
+INSERT INTO `penjualan` VALUES (7, 'PNJ002', '2026-05-01', 1, 250000.00, 25000.00, 225000.00, 250000.00, 25000.00, 3, NULL);
+INSERT INTO `penjualan` VALUES (8, 'PNJ003', '2026-05-08', 1, 125000.00, 12500.00, 112500.00, 150000.00, 37500.00, 3, NULL);
+INSERT INTO `penjualan` VALUES (10, 'PNJ004', '2026-05-08', 1, 6875000.00, 687500.00, 6187500.00, 0.00, 6187500.00, 2, 'uploads/transfer_PNJ004_1778243659.jpeg');
 
 -- ----------------------------
 -- Table structure for pesanan_pembelian
@@ -190,12 +221,14 @@ CREATE TABLE `pesanan_pembelian`  (
   INDEX `fk_pp_pengguna`(`id_pengguna` ASC) USING BTREE,
   CONSTRAINT `pesanan_pembelian_ibfk_1` FOREIGN KEY (`id_pemasok`) REFERENCES `pemasok` (`id`) ON DELETE SET NULL ON UPDATE RESTRICT,
   CONSTRAINT `pesanan_pembelian_ibfk_2` FOREIGN KEY (`id_pengguna`) REFERENCES `pengguna` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Header transaksi pembelian / stok masuk dari pemasok' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = 'Header transaksi pembelian / stok masuk dari pemasok' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of pesanan_pembelian
 -- ----------------------------
 INSERT INTO `pesanan_pembelian` VALUES (8, 'PBL001', 2, 1, '2026-04-20', '2026-04-20', '2026-04-20', 'diterima', 5000000.00, 0.00, 0.00, 0.00, 0.00, 5000000.00);
+INSERT INTO `pesanan_pembelian` VALUES (9, 'PBL002', 2, 1, '2026-05-08', '2026-05-08', NULL, 'dipesan', 5000000.00, 0.00, 10.00, 500000.00, 500000.00, 5500000.00);
+INSERT INTO `pesanan_pembelian` VALUES (10, 'PBL003', 2, 1, '2026-05-08', '2026-05-08', NULL, 'dipesan', 5000000.00, 500000.00, 10.00, 500000.00, 500000.00, 5500000.00);
 
 -- ----------------------------
 -- Table structure for produk
@@ -321,6 +354,12 @@ CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_helper_stok_masuk` AS 
 -- ----------------------------
 DROP VIEW IF EXISTS `v_pembelian`;
 CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_pembelian` AS select `produk_sku`.`kode_sku` AS `kode_sku`,`produk_sku`.`nama_variasi` AS `nama_variasi`,`produk`.`satuan` AS `satuan`,`detail_pembelian`.`id` AS `id`,`detail_pembelian`.`id_sku` AS `id_sku`,`detail_pembelian`.`jumlah_pesan` AS `jumlah_pesan`,`detail_pembelian`.`jumlah_terima` AS `jumlah_terima`,`detail_pembelian`.`harga_beli` AS `harga_beli`,`detail_pembelian`.`subtotal` AS `subtotal`,`produk`.`nama` AS `nama`,`detail_pembelian`.`nomor_po` AS `nomor_po`,`pesanan_pembelian`.`tanggal_pesan` AS `tanggal_pesan`,`pesanan_pembelian`.`tanggal_terima` AS `tanggal_terima` from (((`detail_pembelian` join `produk_sku` on((`detail_pembelian`.`id_sku` = `produk_sku`.`id`))) join `produk` on((`produk_sku`.`id_produk` = `produk`.`id`))) left join `pesanan_pembelian` on((`detail_pembelian`.`nomor_po` = `pesanan_pembelian`.`nomor_po`)));
+
+-- ----------------------------
+-- View structure for v_pengembalian_penjualan
+-- ----------------------------
+DROP VIEW IF EXISTS `v_pengembalian_penjualan`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `v_pengembalian_penjualan` AS select `pengembalian_penjualan`.`id` AS `id`,`pengembalian_penjualan`.`nomor_penjualan` AS `nomor_penjualan`,`pengembalian_penjualan`.`id_sku` AS `id_sku`,`pengembalian_penjualan`.`jumlah_pengembalian` AS `jumlah_pengembalian`,`pengembalian_penjualan`.`alasan_pengembalian` AS `alasan_pengembalian`,`pengembalian_penjualan`.`nominal_pengembalian` AS `nominal_pengembalian`,`produk_sku`.`kode_sku` AS `kode_sku`,`produk`.`nama` AS `nama`,`pengembalian_penjualan`.`tanggal_pengembalian` AS `tanggal_pengembalian` from ((`pengembalian_penjualan` join `produk_sku` on((`pengembalian_penjualan`.`id_sku` = `produk_sku`.`id`))) join `produk` on((`produk_sku`.`id_produk` = `produk`.`id`)));
 
 -- ----------------------------
 -- View structure for v_penjualan

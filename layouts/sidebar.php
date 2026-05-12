@@ -96,6 +96,8 @@
                         <ul class="sub-menu" aria-expanded="false">
                             <li><a href="?page=penjualan" data-key="t-inbox">Penjualan</a></li>
                             <li><a href="?page=riwayat-penjualan" data-key="t-read-email">Riwayat Penjualan</a></li>
+                            <li><a href="?page=pengembalian-penjualan" data-key="t-read-email">Pengembalian Penjualan</a>
+                            </li>
                         </ul>
                     </li>
 

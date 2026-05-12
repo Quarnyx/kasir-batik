@@ -76,6 +76,8 @@ $data = mysqli_fetch_array($query);
                             </tr>
                         </tbody>
                     </table>
+                    <?php include_once "../../layouts/letter-footer.php"; ?>
+
                 </div>
             </div>
         </div>

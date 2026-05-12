@@ -80,8 +80,8 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Subtotal</label>
-                                <input type="number" name="subtotal" class="form-control" placeholder="Subtotal"
-                                    value="<?php echo $subtotal; ?>" id="subtotal">
+                                <input type="text" name="subtotal" class="form-control currency" placeholder="Subtotal"
+                                    value="<?php echo number_format($subtotal, 0, ',', '.') ?>" id="subtotal">
                             </div>
                         </div>
                     </div>
@@ -109,31 +109,42 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Jumlah Diskon (Rp)</label>
-                                <input type="number" name="jumlah_diskon" class="form-control"
-                                    placeholder="Jumlah Diskon" value="0" id="jumlah_diskon" readonly>
+                                <input type="text" name="jumlah_diskon" class="form-control" placeholder="Jumlah Diskon"
+                                    value="0" id="jumlah_diskon" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Total</label>
-                                <input type="number" name="total" class="form-control" placeholder="Total"
-                                    value="<?= $subtotal ?>" id="total">
+                                <input type="text" name="total" class="form-control" placeholder="Total"
+                                    value="<?= number_format($subtotal, 0, ',', '.') ?>" id="total" readonly>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4" id="uang_bayar_div">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Uang Bayar (Rp)</label>
-                                <input type="number" name="uang_bayar" class="form-control" placeholder="Uang Bayar"
+                                <input type="text" name="uang_bayar" class="form-control" placeholder="Uang Bayar"
                                     value="0" id="uang_bayar">
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" id="uang_kembalian_div">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Kembalian</label>
-                                <input type="number" name="uang_kembalian" class="form-control" placeholder="Kembalian"
-                                    value="0" id="uang_kembalian">
+                                <input type="text" name="uang_kembalian" class="form-control" placeholder="Kembalian"
+                                    value="0" id="uang_kembalian" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-4" id="bukti_transfer_div">
+                            <div class="mb-3">
+                                <label for="bukti_transfer" class="form-label fw-bold"> Bukti Transfer
+                                </label>
+                                <input type="file" class="form-control" id="bukti_transfer" name="bukti_transfer"
+                                    accept="image/*">
+                                <div class="form-text">
+                                    Format: JPG, PNG, JPEG
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -146,7 +157,7 @@
                                     $query = mysqli_query($link, "SELECT * FROM metode_pembayaran");
                                     while ($data = mysqli_fetch_array($query)) {
                                         ?>
-                                        <option value="<?= $data['id'] ?>">
+                                        <option value="<?= $data['id'] ?>" data-jenis="<?= $data['jenis'] ?>">
                                             <?= $data['nama'] . ' - ' . $data['nomor_rekening'] ?>
                                         </option>
                                         <?php
@@ -165,26 +176,53 @@
 </form>
 
 <script>
+
+    function formatDecimal(number) {
+        var n = parseFloat(number) || 0;
+        return n.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    function parseDecimal(str) {
+        if (typeof str === 'number') return str;
+        return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
+    }
+
     $(document).ready(function () {
         $('#tabel-data').DataTable();
         $('#promo').on('change', function () {
             var diskon = parseFloat($(this).val()) || 0;
-            var jumlah_diskon = (diskon / 100) * parseFloat($('#subtotal').val()) || 0;
-            var subtotal = parseFloat($('#subtotal').val()) || 0;
+            var subtotal = parseDecimal($('#subtotal').val());
+            var jumlah_diskon = (diskon / 100) * subtotal;
             var total = subtotal - jumlah_diskon;
-            var uang_bayar = parseFloat($('#uang_bayar').val()) || 0;
+            var uang_bayar = parseDecimal($('#uang_bayar').val());
             var uang_kembalian = uang_bayar - total;
-            $('#total').val(total);
-            $('#jumlah_diskon').val(jumlah_diskon);
-            $('#uang_kembalian').val(uang_kembalian);
+            $('#total').val(formatDecimal(total));
+            $('#jumlah_diskon').val(formatDecimal(jumlah_diskon));
+            $('#uang_kembalian').val(formatDecimal(uang_kembalian));
         });
         $('#uang_bayar').on('input', function () {
-            var uang_bayar = parseFloat($(this).val()) || 0;
-            var diskon = parseFloat($('#jumlah_diskon').val()) || 0;
-            var subtotal = parseFloat($('#subtotal').val()) || 0;
+            var raw = $(this).val().replace(/[^0-9]/g, '');
+            var uang_bayar = parseFloat(raw) || 0;
+            $(this).val(formatDecimal(uang_bayar));
+            var diskon = parseDecimal($('#jumlah_diskon').val());
+            var subtotal = parseDecimal($('#subtotal').val());
             var total = subtotal - diskon;
             var uang_kembalian = uang_bayar - total;
-            $('#uang_kembalian').val(uang_kembalian);
+            $('#uang_kembalian').val(formatDecimal(uang_kembalian));
+        });
+        $('#metode_pembayaran').on('change', function () {
+            const jenis = $(this).find(':selected').data('jenis');
+            if (jenis == 'tunai') {
+                //hide bukti transfer
+                $('#bukti_transfer_div').hide();
+                $('#bukti_transfer').attr('required', false);
+            } else {
+                //show bukti transfer
+                $('#bukti_transfer_div').show();
+                $('#bukti_transfer').attr('required', true);
+                $('#uang_kembalian_div').hide();
+                $('#uang_bayar_div').hide();
+            }
         });
         $('#tabel-data').on('click', '#delete', function () {
             const id = $(this).data('id');
@@ -227,6 +265,14 @@
 
         $("#post-penjualan").submit(function (e) {
             e.preventDefault();
+
+            // Strip formatting before sending to server
+            $('#subtotal').val(parseDecimal($('#subtotal').val()));
+            $('#total').val(parseDecimal($('#total').val()));
+            $('#jumlah_diskon').val(parseDecimal($('#jumlah_diskon').val()));
+            $('#uang_bayar').val(parseDecimal($('#uang_bayar').val()));
+            $('#uang_kembalian').val(parseDecimal($('#uang_kembalian').val()));
+
             var formData = new FormData(this);
             var nomor_penjualan = $('#nomor_penjualan').val();
 

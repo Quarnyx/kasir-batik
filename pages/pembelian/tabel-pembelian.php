@@ -88,8 +88,8 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Subtotal</label>
-                                <input type="number" name="subtotal" class="form-control" placeholder="Subtotal"
-                                    value="<?php echo $subtotal; ?>" id="subtotal">
+                                <input type="text" name="subtotal" class="form-control" placeholder="Subtotal"
+                                    value="<?php echo number_format($subtotal, 0, ',', '.'); ?>" id="subtotal">
                             </div>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Ongkos Kirim</label>
-                                <input type="number" name="ongkir" class="form-control" placeholder="Ongkos Kirim"
+                                <input type="text" name="ongkir" class="form-control" placeholder="Ongkos Kirim"
                                     value="0" id="ongkir">
                             </div>
                         </div>
@@ -130,15 +130,15 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Diskon (Rp)</label>
-                                <input type="number" name="diskon" class="form-control" placeholder="Diskon" value="0"
+                                <input type="text" name="diskon" class="form-control" placeholder="Diskon" value="0"
                                     id="diskon">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <label for="simpleinput" class="form-label">Total</label>
-                                <input type="number" name="total" class="form-control" placeholder="Total"
-                                    value="<?= $subtotal ?>" id="total">
+                                <input type="text" name="total" class="form-control" placeholder="Total"
+                                    value="<?= $subtotal ?>" id="total" readonly>
                             </div>
                         </div>
                     </div>
@@ -151,6 +151,16 @@
 </form>
 
 <script>
+
+    function formatDecimal(number) {
+        var n = parseFloat(number) || 0;
+        return n.toLocaleString('id-ID', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+    }
+
+    function parseDecimal(str) {
+        if (typeof str === 'number') return str;
+        return parseFloat(str.replace(/\./g, '').replace(',', '.')) || 0;
+    }
     $(document).ready(function () {
         $('#tabel-data').DataTable();
         var choicesIdPemasok = new Choices('#id_pemasok', {
@@ -162,27 +172,29 @@
         });
         $('#pajak').on('input', function () {
             var pajak = parseFloat($(this).val()) || 0;
-            var diskon = parseFloat($('#diskon').val()) || 0;
-            var subtotal = parseFloat($('#subtotal').val()) || 0;
-            var ongkir = parseFloat($('#ongkir').val()) || 0;
+            var diskon = parseDecimal($('#diskon').val()) || 0;
+            var subtotal = parseDecimal($('#subtotal').val()) || 0;
+            var ongkir = parseDecimal($('#ongkir').val()) || 0;
             var total = subtotal - diskon + (subtotal * pajak / 100) + ongkir;
-            $('#total').val(total);
+            $('#total').val(formatDecimal(total));
         });
         $('#diskon').on('input', function () {
-            var diskon = parseFloat($(this).val()) || 0;
+            var ongkir = parseDecimal($('#ongkir').val()) || 0;
+            var diskon = parseDecimal($(this).val()) || 0;
+            var subtotal = parseDecimal($('#subtotal').val()) || 0;
             var pajak = parseFloat($('#pajak').val()) || 0;
-            var subtotal = parseFloat($('#subtotal').val()) || 0;
-            var ongkir = parseFloat($('#ongkir').val()) || 0;
             var total = subtotal - diskon + (subtotal * pajak / 100) + ongkir;
-            $('#total').val(total);
+            $('#total').val(formatDecimal(total));
+            $(this).val(formatDecimal(diskon));
         });
         $('#ongkir').on('input', function () {
-            var ongkir = parseFloat($(this).val()) || 0;
-            var diskon = parseFloat($('#diskon').val()) || 0;
-            var subtotal = parseFloat($('#subtotal').val()) || 0;
+            var ongkir = parseDecimal($(this).val()) || 0;
+            var diskon = parseDecimal($('#diskon').val()) || 0;
+            var subtotal = parseDecimal($('#subtotal').val()) || 0;
             var pajak = parseFloat($('#pajak').val()) || 0;
             var total = subtotal - diskon + (subtotal * pajak / 100) + ongkir;
-            $('#total').val(total);
+            $('#total').val(formatDecimal(total));
+            $(this).val(formatDecimal(ongkir));
         });
         $('#tabel-data').on('click', '#delete', function () {
             const id = $(this).data('id');

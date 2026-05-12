@@ -10,14 +10,15 @@ switch ($_GET['aksi'] ?? '') {
         $tanggal_pesan = $_POST['tanggal_pesan'];
         $tanggal_ekspektasi = $_POST['tanggal_ekspektasi'];
         $status = 'dipesan';
-        $subtotal = $_POST['subtotal'];
-        $ongkos_kirim = $_POST['ongkir'];
-        $persen_pajak = $_POST['pajak'];
+        $subtotal = preg_replace('/[^0-9]/', '', $_POST['subtotal']);
+        $ongkos_kirim = preg_replace('/[^0-9]/', '', $_POST['ongkir']);
+        $diskon = preg_replace('/[^0-9]/', '', $_POST['diskon']);
+        $persen_pajak = preg_replace('/[^0-9]/', '', $_POST['pajak']);
         $jumlah_pajak = $subtotal * ($persen_pajak / 100);
-        $total = $subtotal + $ongkos_kirim + $jumlah_pajak;
+        $total = $subtotal - $diskon + $ongkos_kirim + $jumlah_pajak;
         $id_pengguna = $_POST['id_pengguna'];
-        $sql = "INSERT INTO pesanan_pembelian (nomor_po, id_pemasok, tanggal_pesan, tanggal_ekspektasi, status, subtotal, ongkos_kirim, persen_pajak, jumlah_pajak, total, id_pengguna) 
-        VALUES ('$nomor_po', '$id_pemasok', '$tanggal_pesan', '$tanggal_ekspektasi', '$status', '$subtotal', '$ongkos_kirim', '$persen_pajak', '$jumlah_pajak', '$total', '$id_pengguna')";
+        $sql = "INSERT INTO pesanan_pembelian (nomor_po, id_pemasok, tanggal_pesan, tanggal_ekspektasi, status, subtotal, ongkos_kirim, persen_pajak, jumlah_pajak, total, id_pengguna, diskon) 
+        VALUES ('$nomor_po', '$id_pemasok', '$tanggal_pesan', '$tanggal_ekspektasi', '$status', '$subtotal', '$ongkos_kirim', '$persen_pajak', '$jumlah_pajak', '$total', '$id_pengguna', '$diskon')";
         $result = $link->query($sql);
         if ($result) {
             http_response_code(200);
@@ -30,7 +31,7 @@ switch ($_GET['aksi'] ?? '') {
 
         $id_sku = $_POST['id_sku'];
         $nomor_po = $_POST['nomor_po'];
-        $harga_beli = $_POST['harga_beli'];
+        $harga_beli = preg_replace('/[^0-9]/', '', $_POST['harga_beli']);
         $jumlah_pesan = $_POST['jumlah_pesan'];
         $subtotal = $harga_beli * $jumlah_pesan;
         $sql = "INSERT INTO detail_pembelian (id_sku, jumlah_pesan, harga_beli, nomor_po, subtotal) 

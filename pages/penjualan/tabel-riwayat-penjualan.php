@@ -8,6 +8,7 @@
             <th>Diskon</th>
             <th>Total</th>
             <th>Metode Pembayaran</th>
+            <th>Bukti Transfer</th>
             <th>Aksi</th>
         </tr>
     </thead>
@@ -27,6 +28,13 @@
                 <td><?= number_format($data['jumlah_diskon'], 0, ',', '.') ?></td>
                 <td><?= number_format($data['total'], 0, ',', '.') ?></td>
                 <td><?= $data['nama'] ?></td>
+                <td>
+                    <?php if ($data['upload'] === '') { ?>
+                        Tunai
+                    <?php } else { ?>
+                        <img class="img-fluid" width="50" src="<?= $data['upload'] ?>">
+                    <?php } ?>
+                </td>
                 <td>
                     <a href="pages/penjualan/cetak-struk.php?nomor_penjualan=<?= $data['nomor_penjualan'] ?>"
                         target="_blank" class="btn btn-primary">Cetak</a>
